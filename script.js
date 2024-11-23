@@ -1,4 +1,5 @@
-// تهيئة EmailJS
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.4.1/dist/email.min.js"></script>
+// تهيئةEmailJS
 emailjs.init("service_t9ogwct");
 
 // عند الضغط على زر الإرسال
