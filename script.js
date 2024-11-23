@@ -14,14 +14,14 @@ document.getElementById("submit-order").addEventListener("click", function () {
     }
 
     // إعداد البيانات للإرسال
-    const templateParams = {
-        from_name: name,
-        phone: phone,
-        beefQuantity: beefQuantity,
-        chickenQuantity: chickenQuantity,
-        sideDish1: sideDish1,
-        sideDish2: sideDish2,
-    };
+ const templateParams = {
+    from_name: name,
+    phone: phone,
+    beefQuantity: beefQuantity,
+    chickenQuantity: chickenQuantity,
+    sideDish1: sideDish1,
+    sideDish2: sideDish2,
+};
 
     // إرسال البريد باستخدام EmailJS
     emailjs
