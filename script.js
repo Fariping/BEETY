@@ -1,29 +1,44 @@
-// إضافة فحص لحالة الحظر
-function checkBlockedStatus() {
-    return new Promise((resolve, reject) => {
-        const testImage = new Image();
-        testImage.onload = () => resolve(false);
-        testImage.onerror = () => resolve(true);
-        testImage.src = 'https://api.emailjs.com/favicon.ico';
-    });
+// تكوين EmailJS
+const EMAILJS_USER_ID = "-_n0qbKnDcV32oAOP";
+const EMAILJS_SERVICE_ID = "service_t9ogwct";
+const EMAILJS_TEMPLATE_ID = "template_0hkm9zd";
+
+async function sendEmail(templateParams) {
+    const url = 'https://api.emailjs.com/api/v1.0/email/send';
+    const data = {
+        service_id: EMAILJS_SERVICE_ID,
+        template_id: EMAILJS_TEMPLATE_ID,
+        user_id: EMAILJS_USER_ID,
+        template_params: templateParams
+    };
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Origin': window.location.origin
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        return await response.text();
+    } catch (error) {
+        console.error('Error:', error);
+        throw error;
+    }
 }
 
-// تحسين دالة الإرسال
 async function handleSubmit(event) {
     event.preventDefault();
     const submitButton = document.getElementById("submit-order");
     submitButton.disabled = true;
     
     try {
-        // التحقق من وجود حظر
-        const isBlocked = await checkBlockedStatus();
-        if (isBlocked) {
-            throw new Error(
-                "يبدو أن هناك مانع إعلانات يمنع إرسال الطلب. " +
-                "الرجاء تعطيل مانع الإعلانات أو استخدام طريقة اتصال بديلة:"
-            );
-        }
-
         // جمع البيانات
         const name = document.getElementById("customer-name").value.trim();
         const phone = document.getElementById("customer-phone").value.trim();
@@ -32,74 +47,101 @@ async function handleSubmit(event) {
         const sideDish1 = parseInt(document.getElementById("side-dish-1").value) || 0;
         const sideDish2 = parseInt(document.getElementById("side-dish-2").value) || 0;
 
-        // إنشاء نص الطلب كاحتياطي
-        const orderText = `
-            الاسم: ${name}
-            رقم الجوال: ${phone}
-            وجبة لحم: ${beefQuantity}
-            وجبة دجاج: ${chickenQuantity}
-            سحاوق مع عشار: ${sideDish1}
-            سلطة خيار مع زبادي: ${sideDish2}
-            السعر الإجمالي: ${(beefQuantity + chickenQuantity) * 15} ريال
-        `;
+        // التحقق من البيانات
+        if (!name || !phone) {
+            throw new Error('يرجى تعبئة جميع الحقول المطلوبة');
+        }
 
-        // محاولة الإرسال عبر EmailJS
+        // إعداد بيانات الطلب
         const templateParams = {
             from_name: name,
             phone: phone,
-            beefQuantity,
-            chickenQuantity,
-            sideDish1,
-            sideDish2,
-            total_price: (beefQuantity + chickenQuantity) * 15,
-            order_text: orderText
+            order_details: `
+                وجبة لحم: ${beefQuantity}
+                وجبة دجاج: ${chickenQuantity}
+                سحاوق مع عشار: ${sideDish1}
+                سلطة خيار مع زبادي: ${sideDish2}
+            `,
+            total_price: (beefQuantity + chickenQuantity) * 15
         };
 
-        const response = await emailjs.send(
-            "service_t9ogwct",
-            "template_0hkm9zd",
-            templateParams
-        );
-
-        if (response.status === 200) {
-            alert("تم إرسال الطلب بنجاح!");
-            document.getElementById("orderForm").reset();
-        } else {
-            // إذا فشل الإرسال، نقدم خيارات بديلة
-            throw new Error("فشل إرسال الطلب");
-        }
+        // محاولة الإرسال
+        await sendEmail(templateParams);
+        
+        // نجاح الإرسال
+        alert('تم إرسال الطلب بنجاح!');
+        document.getElementById("orderForm").reset();
 
     } catch (error) {
-        console.error("تفاصيل الخطأ:", error);
+        console.error('Error details:', error);
         
-        // عرض رسالة خطأ مع خيارات بديلة
-        const errorMessage = `
-            ${error.message}
-            
-            يمكنك إرسال الطلب عبر:
-            1. واتساب: [رقم الواتساب]
-            2. الاتصال مباشرة: [رقم الهاتف]
-            3. تعطيل مانع الإعلانات والمحاولة مرة أخرى
+        // إنشاء نص الطلب للنسخ الاحتياطي
+        const orderDetails = `
+            الاسم: ${name}
+            رقم الجوال: ${phone}
+            الطلب:
+            - وجبة لحم: ${beefQuantity}
+            - وجبة دجاج: ${chickenQuantity}
+            - سحاوق مع عشار: ${sideDish1}
+            - سلطة خيار مع زبادي: ${sideDish2}
+            السعر الإجمالي: ${(beefQuantity + chickenQuantity) * 15} ريال
         `;
+
+        // إنشاء زر واتساب مع تفاصيل الطلب
+        const whatsappUrl = `https://wa.me/YOUR_WHATSAPP_NUMBER?text=${encodeURIComponent(orderDetails)}`;
         
+        const errorMessage = `
+            عذراً، حدث خطأ أثناء إرسال الطلب.
+            يمكنك:
+            1. إرسال الطلب عبر واتساب
+            2. المحاولة مرة أخرى لاحقاً
+            3. الاتصال بنا مباشرة على الرقم: [رقم الهاتف]
+        `;
+
         alert(errorMessage);
-        
-        // إضافة أزرار للطرق البديلة
+
+        // إضافة أزرار بديلة
         const alternativeButtons = document.createElement('div');
-        alternativeButtons.className = 'alternative-contact';
         alternativeButtons.innerHTML = `
-            <button onclick="window.open('https://wa.me/YOUR_WHATSAPP_NUMBER', '_blank')">
-                إرسال عبر واتساب
+            <button onclick="window.open('${whatsappUrl}', '_blank')" class="whatsapp-btn">
+                إرسال الطلب عبر واتساب
             </button>
-            <button onclick="window.location.href='tel:YOUR_PHONE_NUMBER'">
+            <button onclick="window.location.href='tel:YOUR_PHONE_NUMBER'" class="call-btn">
                 اتصال مباشر
             </button>
         `;
         
-        document.getElementById('orderForm').appendChild(alternativeButtons);
+        const form = document.getElementById('orderForm');
+        if (!form.querySelector('.alternative-buttons')) {
+            form.appendChild(alternativeButtons);
+        }
     } finally {
         submitButton.disabled = false;
     }
     
     return false;
 }
+
+// إضافة CSS للأزرار
+const style = document.createElement('style');
+style.textContent = `
+    .whatsapp-btn, .call-btn {
+        display: block;
+        width: 100%;
+        margin: 10px 0;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    .whatsapp-btn {
+        background-color: #25D366;
+        color: white;
+    }
+    .call-btn {
+        background-color: #007bff;
+        color: white;
+    }
+`;
+document.head.appendChild(style);
