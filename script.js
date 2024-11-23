@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         // إرسال الطلب
-        emailjs.send('service_t9ogwct', 'template_default', order)
+        emailjs.send('service_t9ogwct', 'template_0hkm9zd', order)
             .then(function(response) {
                 alert('تم إرسال الطلب بنجاح!');
                 form.reset(); // إعادة تعيين النموذج
