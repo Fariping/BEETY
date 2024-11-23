@@ -1,71 +1,91 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BeetyFood</title>
-    <!-- إضافة مكتبة EmailJS -->
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <!-- تهيئة EmailJS -->
-    <script>
-        (function() {
-            emailjs.init("-_n0qbKnDcV32oAOP");
-        })();
-    </script>
-    <link rel="stylesheet" href="style.css">
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>BeetyFood</title>
+   <!-- إضافة مكتبة EmailJS -->
+   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+   <!-- تهيئة EmailJS -->
+   <script>
+       (function() {
+           emailjs.init("-_n0qbKnDcV32oAOP");
+       })();
+   </script>
+   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <!-- الصورة -->
-        <div id="frame1">
-            <h1>Here Photo my BEETYFOOD</h1>
-        </div>
+   <div class="container">
+       <!-- الصورة -->
+       <div id="frame1">
+           <h1>Here Photo my BEETYFOOD</h1>
+       </div>
 
-        <!-- وجبات يوم السبت -->
-        <div id="frame2">
-            <h2>وجبات يوم السبت</h2>
+       <!-- رسالة نفاذ الكمية -->
+       <div id="sold-out-message" style="display: none;">
+           <div class="message-box">
+               <h2>للأسف انتهت الوجبات المتاحة</h2>
+               <p>نراكم الأسبوع القادم</p>
+           </div>
+       </div>
 
-            <form id="order-form">
-                <!-- وجبة لحم -->
-                <div class="meal">
-                    <button type="button">وجبة لحم حنيد</button>
-                    <span>السعر: 15</span>
-                    <input id="beef-meal" type="number" min="0" max="15" placeholder="الكمية">
-                </div>
+       <!-- وجبات يوم السبت -->
+       <div id="frame2">
+           <h2>وجبات يوم السبت</h2>
 
-                <!-- وجبة دجاج -->
-                <div class="meal">
-                    <button type="button">وجبة دجاج مندي</button>
-                    <span>السعر: 15</span>
-                    <input id="chicken-meal" type="number" min="0" max="15" placeholder="الكمية">
-                </div>
+           <!-- عداد الوجبات المتبقية -->
+           <div class="meals-counter">
+               <p id="remaining-count">الوجبات المتبقية: 30</p>
+           </div>
 
-                <!-- الأطباق الجانبية -->
-                <h3>أطباق جانبية</h3>
-                <div class="side-dishes">
-                    <div>
-                        <label>سحاوق مع عشار:</label>
-                        <input id="side-dish-1" type="number" min="0" placeholder="الكمية">
-                    </div>
-                    <div>
-                        <label>سلطة خيار مع زبادي:</label>
-                        <input id="side-dish-2" type="number" min="0" placeholder="الكمية">
-                    </div>
-                </div>
+           <form id="order-form">
+               <!-- وجبة لحم -->
+               <div class="meal">
+                   <button type="button">وجبة لحم حنيد</button>
+                   <span>السعر: 15 ريال</span>
+                   <input id="beef-meal" type="number" min="0" max="15" placeholder="الكمية">
+               </div>
 
-                <!-- إدخال الاسم ورقم الجوال -->
-                <div class="user-details">
-                    <input id="customer-name" type="text" placeholder="الاسم" required>
-                    <input id="customer-phone" type="tel" placeholder="رقم الجوال" required>
-                </div>
+               <!-- وجبة دجاج -->
+               <div class="meal">
+                   <button type="button">وجبة دجاج مندي</button>
+                   <span>السعر: 8 ريال</span>
+                   <input id="chicken-meal" type="number" min="0" max="15" placeholder="الكمية">
+               </div>
 
-                <!-- زر الطلب -->
-                <button type="button" id="submit-order">إرسال الطلب</button>
-            </form>
-        </div>
+               <!-- الأطباق الجانبية -->
+               <h3>أطباق جانبية</h3>
+               <div class="side-dishes">
+                   <div>
+                       <label>سحاوق مع عشار:</label>
+                       <input id="side-dish-1" type="number" min="0" placeholder="الكمية">
+                   </div>
+                   <div>
+                       <label>سلطة خيار مع زبادي:</label>
+                       <input id="side-dish-2" type="number" min="0" placeholder="الكمية">
+                   </div>
+               </div>
 
-        <p>الدفع كاش - استلام الطلب من الساعة 15-17</p>
-    </div>
-    <script src="script.js"></script>
+               <!-- إدخال الاسم ورقم الجوال -->
+               <div class="user-details">
+                   <input id="customer-name" type="text" placeholder="الاسم" required>
+                   <input id="customer-phone" type="tel" placeholder="رقم الجوال" required>
+               </div>
+
+               <!-- عرض السعر الإجمالي -->
+               <div class="total-price">
+                   <p id="total-price-display">السعر الإجمالي: 0 ريال</p>
+               </div>
+
+               <!-- زر الطلب -->
+               <button type="button" id="submit-order">إرسال الطلب</button>
+           </form>
+       </div>
+
+       <p>الدفع كاش - استلام الطلب من الساعة 15-17</p>
+   </div>
+
+   <!-- إضافة ملف JavaScript -->
+   <script src="script.js"></script>
 </body>
 </html>
