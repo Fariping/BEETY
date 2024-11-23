@@ -5,12 +5,189 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BeetyFood</title>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --primary-color: #ff6b6b;
+            --secondary-color: #4ecdc4;
+            --text-color: #2d3436;
+            --background-color: #f9f9f9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        #frame1 {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        #frame2 {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .meal {
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #ff5252;
+        }
+
+        button[type="button"] {
+            background-color: transparent;
+            color: var(--text-color);
+            border: 1px solid #ddd;
+        }
+
+        input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 100px;
+        }
+
+        .side-dishes {
+            display: grid;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .side-dishes div {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .user-details {
+            display: grid;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .user-details input {
+            max-width: 100%;
+        }
+
+        #submit-order {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+
+        .delivery-info {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 600px) {
+            .meal {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .side-dishes div {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            input {
+                max-width: 100%;
+            }
+        }
+
+        /* تنسيق للأزرار البديلة */
+        .alternative-buttons {
+            display: grid;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .whatsapp-btn {
+            background-color: #25D366;
+        }
+
+        .call-btn {
+            background-color: #007bff;
+        }
+
+        /* إضافة مؤشر التحميل */
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        /* تنسيق رسائل الخطأ */
+        .error-message {
+            color: #dc3545;
+            margin-top: 5px;
+            font-size: 0.9em;
+        }
+
+        /* إضافة تأثيرات تفاعلية */
+        input:focus, button:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--primary-color);
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <div id="frame1">
-            <h1>Here Photo my BEETYFOOD</h1>
+            <h1>BEETYFOOD</h1>
+            <!-- يمكن إضافة صورة هنا -->
+            <img src="your-logo.png" alt="BeetyFood Logo" style="max-width: 200px; margin: 20px 0;">
         </div>
         
         <div id="frame2">
@@ -19,42 +196,66 @@
             <form id="orderForm" onsubmit="return handleSubmit(event)">
                 <!-- وجبة لحم -->
                 <div class="meal">
-                    <button type="button">وجبة لحم حنيد</button>
-                    <span>السعر: 15</span>
-                    <input id="beef-meal" type="number" min="0" max="15" placeholder="الكمية">
+                    <button type="button" class="meal-title">وجبة لحم حنيد</button>
+                    <span class="price">15 ريال</span>
+                    <input id="beef-meal" type="number" min="0" max="15" placeholder="الكمية" 
+                           aria-label="كمية وجبة اللحم">
                 </div>
 
                 <!-- وجبة دجاج -->
                 <div class="meal">
-                    <button type="button">وجبة دجاج مندي</button>
-                    <span>السعر: 15</span>
-                    <input id="chicken-meal" type="number" min="0" max="15" placeholder="الكمية">
+                    <button type="button" class="meal-title">وجبة دجاج مندي</button>
+                    <span class="price">15 ريال</span>
+                    <input id="chicken-meal" type="number" min="0" max="15" placeholder="الكمية"
+                           aria-label="كمية وجبة الدجاج">
                 </div>
 
                 <!-- الأطباق الجانبية -->
                 <h3>أطباق جانبية</h3>
                 <div class="side-dishes">
                     <div>
-                        <label>سحاوق مع عشار:</label>
+                        <label for="side-dish-1">سحاوق مع عشار:</label>
                         <input id="side-dish-1" type="number" min="0" placeholder="الكمية">
                     </div>
                     <div>
-                        <label>سلطة خيار مع زبادي:</label>
+                        <label for="side-dish-2">سلطة خيار مع زبادي:</label>
                         <input id="side-dish-2" type="number" min="0" placeholder="الكمية">
                     </div>
                 </div>
 
                 <!-- معلومات العميل -->
                 <div class="user-details">
-                    <input id="customer-name" type="text" placeholder="الاسم" required>
+                    <input id="customer-name" type="text" placeholder="الاسم" required
+                           aria-label="اسم العميل">
                     <input id="customer-phone" type="tel" placeholder="رقم الجوال" 
-                           pattern="[0-9]{10}" required>
+                           pattern="[0-9]{10}" required
+                           aria-label="رقم جوال العميل">
                 </div>
 
                 <button type="submit" id="submit-order">إرسال الطلب</button>
             </form>
         </div>
-        <p>الدفع كاش - استلام الطلب من الساعة 15-17</p>
+        
+        <div class="delivery-info">
+            <p>الدفع كاش - استلام الطلب من الساعة 15-17</p>
+        </div>
     </div>
+
+    <script>
+        // إضافة تفاعلات للأزرار
+        document.querySelectorAll('.meal-title').forEach(button => {
+            button.addEventListener('click', function() {
+                this.classList.toggle('selected');
+            });
+        });
+
+        // التحقق من الإدخال في حقول الكمية
+        document.querySelectorAll('input[type="number"]').forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.value < 0) this.value = 0;
+                if (this.value > 15) this.value = 15;
+            });
+        });
+    </script>
 </body>
 </html>
