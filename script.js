@@ -1,102 +1,100 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('order-form');
-    const submitButton = document.getElementById('submit-order');
+    const MAX_TOTAL_ORDERS = 30;  
+    const BEEF_PRICE = 15;        
+    const CHICKEN_PRICE = 8;       
 
-    // دالة للتحقق من صحة رقم الهاتف
-    function isValidPhone(phone) {
-        // التحقق من أن رقم الهاتف يحتوي على أرقام فقط وطوله مناسب
-        return /^[0-9]{9,10}$/.test(phone);
-    }
+    const orderForm = document.getElementById('order-form');
+    const soldOutMessage = document.getElementById('sold-out-message');
+    const remainingCounter = document.getElementById('remaining-meals');
 
-    // دالة لتنظيف وتنسيق البيانات المدخلة
-    function sanitizeInput(input) {
-        return input.replace(/[&<>"'/]/g, '');
-    }
-
-    submitButton.addEventListener('click', function() {
-        // التحقق من تحميل EmailJS
-        if (typeof emailjs === 'undefined') {
-            alert('خطأ في تحميل نظام الإرسال. يرجى تحديث الصفحة.');
-            return;
-        }
-
-        // جمع البيانات من النموذج
-        const name = sanitizeInput(document.getElementById('customer-name').value.trim());
-        const phone = sanitizeInput(document.getElementById('customer-phone').value.trim());
+    function checkOrderLimit(beefQty, chickenQty) {
+        const totalNewOrders = beefQty + chickenQty;
         
-        const beefQuantity = parseInt(document.getElementById('beef-meal').value) || 0;
-        const chickenQuantity = parseInt(document.getElementById('chicken-meal').value) || 0;
-        const sideDish1 = parseInt(document.getElementById('side-dish-1').value) || 0;
-        const sideDish2 = parseInt(document.getElementById('side-dish-2').value) || 0;
+        if (totalNewOrders > MAX_TOTAL_ORDERS) {
+            soldOutMessage.style.display = "block";
+            orderForm.style.display = "none";
+            return false;
+        }
 
-        // التحقق من صحة البيانات
+        const remaining = MAX_TOTAL_ORDERS - totalNewOrders;
+        remainingCounter.textContent = `الوجبات المتبقية: ${remaining}`;
+        return true;
+    }
+
+    const beefInput = document.getElementById('beef-meal');
+    const chickenInput = document.getElementById('chicken-meal');
+
+    [beefInput, chickenInput].forEach(input => {
+        input.addEventListener('input', function() {
+            const beefQty = parseInt(beefInput.value) || 0;
+            const chickenQty = parseInt(chickenInput.value) || 0;
+            checkOrderLimit(beefQty, chickenQty);
+        });
+    });
+
+    orderForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const name = document.getElementById("customer-name").value.trim();
+        const phone = document.getElementById("customer-phone").value.trim();
+        const beefQuantity = parseInt(beefInput.value) || 0;
+        const chickenQuantity = parseInt(chickenInput.value) || 0;
+        const sideDish1 = parseInt(document.getElementById("side-dish-1").value) || 0;
+        const sideDish2 = parseInt(document.getElementById("side-dish-2").value) || 0;
+
         if (!name || name.length < 2) {
-            alert('يرجى إدخال اسم صحيح (حرفين على الأقل)');
+            alert("يرجى إدخال اسم صحيح");
             return;
         }
 
-        if (!isValidPhone(phone)) {
-            alert('يرجى إدخال رقم جوال صحيح (9-10 أرقام)');
+        if (!phone || phone.length < 8) {
+            alert("يرجى إدخال رقم جوال صحيح");
             return;
         }
 
-        const totalMeals = beefQuantity + chickenQuantity;
-        if (totalMeals === 0) {
-            alert('يرجى اختيار وجبة واحدة على الأقل');
+        if ((beefQuantity + chickenQuantity) === 0) {
+            alert("يرجى اختيار وجبة واحدة على الأقل");
             return;
         }
 
         const totalSideDishes = sideDish1 + sideDish2;
-        if (totalSideDishes > totalMeals) {
-            alert('عدد الأطباق الجانبية لا يمكن أن يتجاوز عدد الوجبات');
+        if (totalSideDishes > (beefQuantity + chickenQuantity)) {
+            alert("عدد الأطباق الجانبية لا يمكن أن يتجاوز عدد الوجبات");
             return;
         }
 
-        // تعطيل زر الإرسال وتغيير النص
-        submitButton.disabled = true;
-        const originalButtonText = submitButton.textContent;
-        submitButton.textContent = 'جاري إرسال الطلب...';
+        const totalPrice = (beefQuantity * BEEF_PRICE) + (chickenQuantity * CHICKEN_PRICE);
 
-        // إعداد بيانات الطلب
-        const order = {
+        const templateParams = {
             from_name: name,
             phone: phone,
-            beefQuantity: beefQuantity,
-            chickenQuantity: chickenQuantity,
-            sideDish1: sideDish1,
-            sideDish2: sideDish2,
-            total_meals: totalMeals,
-            total_side_dishes: totalSideDishes,
-            timestamp: new Date().toLocaleString('ar-SA')
+            beef_quantity: beefQuantity,
+            chicken_quantity: chickenQuantity,
+            side_dish1: sideDish1,
+            side_dish2: sideDish2,
+            total_price: totalPrice
         };
 
-        // إرسال الطلب
-        emailjs.send('service_t9ogwct', 'template_0hkm9zd', order)
+        const submitButton = document.getElementById("submit-order");
+        submitButton.disabled = true;
+        submitButton.textContent = "جاري إرسال الطلب...";
+
+        // تم تحديث معرف القالب هنا
+        emailjs.send("service_t9ogwct", "template_0hkm9zd", templateParams)
             .then(function(response) {
-                alert('تم إرسال الطلب بنجاح!');
-                form.reset(); // إعادة تعيين النموذج
+                alert("تم إرسال الطلب بنجاح!");
+                orderForm.reset();
+                checkOrderLimit(0, 0);
             })
             .catch(function(error) {
-                console.error('Error:', error);
-                alert('حدث خطأ أثناء إرسال الطلب. يرجى المحاولة لاحقاً.');
+                console.error("Error:", error);
+                alert("حدث خطأ أثناء إرسال الطلب. يرجى المحاولة لاحقاً.");
             })
             .finally(function() {
-                // إعادة تفعيل الزر وإرجاع النص الأصلي
                 submitButton.disabled = false;
-                submitButton.textContent = originalButtonText;
+                submitButton.textContent = "إرسال الطلب";
             });
     });
 
-    // تحديد الحد الأقصى للكميات تلقائياً
-    const inputs = document.querySelectorAll('input[type="number"]');
-    inputs.forEach(input => {
-        input.addEventListener('input', function() {
-            if (this.value > 15) {
-                this.value = 15;
-            }
-            if (this.value < 0) {
-                this.value = 0;
-            }
-        });
-    });
+    checkOrderLimit(0, 0);
 });
