@@ -1,8 +1,8 @@
 
 // تهيئةEmailJS
-emailjs.init("service_t9ogwct");
+emailjs.init("service_t9ogwct","template_default");
 
-// عند الضغط على زر الإرسال
+//  عند الضغط على زر الإرسال
 document.getElementById("submit-order").addEventListener("click", function () {
     const name = document.getElementById("customer-name").value;
     const phone = document.getElementById("customer-phone").value;
