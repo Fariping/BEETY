@@ -1,6 +1,6 @@
 
 // تهيئةEmailJS
-emailjs.init("-_n0qbKnDcV32oAOP");
+
 
 //  عند الضغط على زر الإرسال
 document.getElementById("submit-order").addEventListener("click", function () {
@@ -39,7 +39,8 @@ document.getElementById("submit-order").addEventListener("click", function () {
         sideDish2: sideDish2,
     };
 
-    // إرسال البريد باستخدام EmailJS
+    emailjs.init("-_n0qbKnDcV32oAOP");
+// إرسال البريد باستخدام EmailJS
     emailjs
         .send("service_t9ogwct", "template_default", templateParams)
         .then(function (response) {
