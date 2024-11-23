@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     // استبدل YOUR_PUBLIC_KEY بالمفتاح الخاص بك من EmailJS
-    emailjs.init("-_n0qbKnDcV32oAOP");
+    emailjs.init("ghXddYA0ikWafyrWh");
 });
 
 async function handleSubmit(event) {
