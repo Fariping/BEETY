@@ -9,7 +9,7 @@
     <!-- تهيئة EmailJS -->
     <script>
         (function() {
-            emailjs.init("-_n0qbKnDcV32oAOP"); // ضع مفتاح API الخاص بك هنا
+            emailjs.init("-_n0qbKnDcV32oAOP");
         })();
     </script>
     <link rel="stylesheet" href="style.css">
@@ -21,48 +21,46 @@
             <h1>Here Photo my BEETYFOOD</h1>
         </div>
 
-        <!-- النموذج -->
-        <form id="order-form">
-            <div id="frame2">
-                <h2>وجبات يوم السبت</h2>
+        <!-- وجبات يوم السبت -->
+        <div id="frame2">
+            <h2>وجبات يوم السبت</h2>
 
-                <!-- وجبة لحم -->
-                <div class="meal">
-                    <button type="button">وجبة لحم حنيد</button>
-                    <span>السعر: 15</span>
-                    <input id="beef-meal" type="number" min="0" max="15" placeholder="الكمية">
-                </div>
-
-                <!-- وجبة دجاج -->
-                <div class="meal">
-                    <button type="button">وجبة دجاج مندي</button>
-                    <span>السعر: 8</span>
-                    <input id="chicken-meal" type="number" min="0" max="15" placeholder="الكمية">
-                </div>
-
-                <!-- الأطباق الجانبية -->
-                <h3>أطباق جانبية</h3>
-                <div class="side-dishes">
-                    <div>
-                        <label>سحاوق مع عشار:</label>
-                        <input id="side-dish-1" type="number" min="0" placeholder="الكمية">
-                    </div>
-                    <div>
-                        <label>سلطة خيار مع زبادي:</label>
-                        <input id="side-dish-2" type="number" min="0" placeholder="الكمية">
-                    </div>
-                </div>
-
-                <!-- إدخال الاسم ورقم الجوال -->
-                <div class="user-details">
-                    <input id="customer-name" type="text" placeholder="الاسم" required>
-                    <input id="customer-phone" type="tel" placeholder="رقم الجوال" required>
-                </div>
-
-                <!-- زر الطلب -->
-                <button type="submit" id="submit-order">إرسال الطلب</button>
+            <!-- وجبة لحم -->
+            <div class="meal">
+                <button>وجبة لحم حنيد</button>
+                <span>السعر: 15</span>
+                <input id="beef-meal" type="number" min="0" max="15" placeholder="الكمية">
             </div>
-        </form>
+
+            <!-- وجبة دجاج -->
+            <div class="meal">
+                <button>وجبة دجاج مندي</button>
+                <span>السعر: 8</span>
+                <input id="chicken-meal" type="number" min="0" max="15" placeholder="الكمية">
+            </div>
+
+            <!-- الأطباق الجانبية -->
+            <h3>أطباق جانبية</h3>
+            <div class="side-dishes">
+                <div>
+                    <label>سحاوق مع عشار:</label>
+                    <input id="side-dish-1" type="number" min="0" placeholder="الكمية">
+                </div>
+                <div>
+                    <label>سلطة خيار مع زبادي:</label>
+                    <input id="side-dish-2" type="number" min="0" placeholder="الكمية">
+                </div>
+            </div>
+
+            <!-- إدخال الاسم ورقم الجوال -->
+            <div class="user-details">
+                <input id="customer-name" type="text" placeholder="الاسم">
+                <input id="customer-phone" type="text" placeholder="رقم الجوال">
+            </div>
+
+            <!-- زر الطلب -->
+            <button id="submit-order">إرسال الطلب</button>
+        </div>
 
         <p>الدفع كاش - استلام الطلب من الساعة 15-17</p>
     </div>
