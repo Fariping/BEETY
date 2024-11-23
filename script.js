@@ -1,3 +1,7 @@
+// تهيئة EmailJS
+emailjs.init("YOUR_USER_ID");
+
+// عند الضغط على زر الإرسال
 document.getElementById("submit-order").addEventListener("click", function () {
     const name = document.getElementById("customer-name").value;
     const phone = document.getElementById("customer-phone").value;
@@ -8,20 +12,31 @@ document.getElementById("submit-order").addEventListener("click", function () {
     const sideDish1 = parseInt(document.getElementById("side-dish-1").value) || 0;
     const sideDish2 = parseInt(document.getElementById("side-dish-2").value) || 0;
 
+    // التحقق من إدخال الاسم ورقم الهاتف
     if (!name || !phone) {
         alert("يرجى إدخال الاسم ورقم الجوال.");
         return;
     }
 
+    // حساب إجمالي الأطباق الجانبية والوجبات
+    const totalMeals = beefQuantity + chickenQuantity;
+    const totalSideDishes = sideDish1 + sideDish2;
+
+    // التحقق من أن الأطباق الجانبية لا تتجاوز عدد الوجبات
+    if (totalSideDishes > totalMeals) {
+        alert("عدد الأطباق الجانبية لا يمكن أن يتجاوز عدد الوجبات.");
+        return;
+    }
+
     // إعداد البيانات للإرسال
- const templateParams = {
-    from_name: name,
-    phone: phone,
-    beefQuantity: beefQuantity,
-    chickenQuantity: chickenQuantity,
-    sideDish1: sideDish1,
-    sideDish2: sideDish2,
-};
+    const templateParams = {
+        from_name: name,
+        phone: phone,
+        beefQuantity: beefQuantity,
+        chickenQuantity: chickenQuantity,
+        sideDish1: sideDish1,
+        sideDish2: sideDish2,
+    };
 
     // إرسال البريد باستخدام EmailJS
     emailjs
