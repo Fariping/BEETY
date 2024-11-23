@@ -1,53 +1,102 @@
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('order-form');
+    const submitButton = document.getElementById('submit-order');
 
-// تهيئةEmailJS
-    emailjs.init("-_n0qbKnDcV32oAOP");
-
-//  عند الضغط على زر الإرسال
-document.getElementById("submit-order").addEventListener("click", function () {
-    const name = document.getElementById("customer-name").value;
-    const phone = document.getElementById("customer-phone").value;
-
-    const beefQuantity = parseInt(document.getElementById("beef-meal").value) || 0;
-    const chickenQuantity = parseInt(document.getElementById("chicken-meal").value) || 0;
-
-    const sideDish1 = parseInt(document.getElementById("side-dish-1").value) || 0;
-    const sideDish2 = parseInt(document.getElementById("side-dish-2").value) || 0;
-
-    // التحقق من إدخال الاسم ورقم الهاتف
-    if (!name || !phone) {
-        alert("يرجى إدخال الاسم ورقم الجوال.");
-        return;
+    // دالة للتحقق من صحة رقم الهاتف
+    function isValidPhone(phone) {
+        // التحقق من أن رقم الهاتف يحتوي على أرقام فقط وطوله مناسب
+        return /^[0-9]{9,10}$/.test(phone);
     }
 
-    // حساب إجمالي الأطباق الجانبية والوجبات
-    const totalMeals = beefQuantity + chickenQuantity;
-    const totalSideDishes = sideDish1 + sideDish2;
-
-    // التحقق من أن الأطباق الجانبية لا تتجاوز عدد الوجبات
-    if (totalSideDishes > totalMeals) {
-        alert("عدد الأطباق الجانبية لا يمكن أن يتجاوز عدد الوجبات.");
-        return;
+    // دالة لتنظيف وتنسيق البيانات المدخلة
+    function sanitizeInput(input) {
+        return input.replace(/[&<>"'/]/g, '');
     }
 
-    // إعداد البيانات للإرسال
-    const templateParams = {
-        from_name: name,
-        phone: phone,
-        beefQuantity: beefQuantity,
-        chickenQuantity: chickenQuantity,
-        sideDish1: sideDish1,
-        sideDish2: sideDish2,
-    };
+    submitButton.addEventListener('click', function() {
+        // التحقق من تحميل EmailJS
+        if (typeof emailjs === 'undefined') {
+            alert('خطأ في تحميل نظام الإرسال. يرجى تحديث الصفحة.');
+            return;
+        }
 
+        // جمع البيانات من النموذج
+        const name = sanitizeInput(document.getElementById('customer-name').value.trim());
+        const phone = sanitizeInput(document.getElementById('customer-phone').value.trim());
+        
+        const beefQuantity = parseInt(document.getElementById('beef-meal').value) || 0;
+        const chickenQuantity = parseInt(document.getElementById('chicken-meal').value) || 0;
+        const sideDish1 = parseInt(document.getElementById('side-dish-1').value) || 0;
+        const sideDish2 = parseInt(document.getElementById('side-dish-2').value) || 0;
 
-// إرسال البريد باستخدام EmailJS
-    emailjs
-        .send("service_t9ogwct", "template_default", templateParams)
-        .then(function (response) {
-            alert("تم إرسال الطلب بنجاح!");
-        })
-        .catch(function (error) {
-            console.error("حدث خطأ أثناء إرسال الطلب:", error);
-            alert("حدث خطأ أثناء إرسال الطلب. يرجى المحاولة لاحقاً.");
+        // التحقق من صحة البيانات
+        if (!name || name.length < 2) {
+            alert('يرجى إدخال اسم صحيح (حرفين على الأقل)');
+            return;
+        }
+
+        if (!isValidPhone(phone)) {
+            alert('يرجى إدخال رقم جوال صحيح (9-10 أرقام)');
+            return;
+        }
+
+        const totalMeals = beefQuantity + chickenQuantity;
+        if (totalMeals === 0) {
+            alert('يرجى اختيار وجبة واحدة على الأقل');
+            return;
+        }
+
+        const totalSideDishes = sideDish1 + sideDish2;
+        if (totalSideDishes > totalMeals) {
+            alert('عدد الأطباق الجانبية لا يمكن أن يتجاوز عدد الوجبات');
+            return;
+        }
+
+        // تعطيل زر الإرسال وتغيير النص
+        submitButton.disabled = true;
+        const originalButtonText = submitButton.textContent;
+        submitButton.textContent = 'جاري إرسال الطلب...';
+
+        // إعداد بيانات الطلب
+        const order = {
+            from_name: name,
+            phone: phone,
+            beefQuantity: beefQuantity,
+            chickenQuantity: chickenQuantity,
+            sideDish1: sideDish1,
+            sideDish2: sideDish2,
+            total_meals: totalMeals,
+            total_side_dishes: totalSideDishes,
+            timestamp: new Date().toLocaleString('ar-SA')
+        };
+
+        // إرسال الطلب
+        emailjs.send('service_t9ogwct', 'template_default', order)
+            .then(function(response) {
+                alert('تم إرسال الطلب بنجاح!');
+                form.reset(); // إعادة تعيين النموذج
+            })
+            .catch(function(error) {
+                console.error('Error:', error);
+                alert('حدث خطأ أثناء إرسال الطلب. يرجى المحاولة لاحقاً.');
+            })
+            .finally(function() {
+                // إعادة تفعيل الزر وإرجاع النص الأصلي
+                submitButton.disabled = false;
+                submitButton.textContent = originalButtonText;
+            });
+    });
+
+    // تحديد الحد الأقصى للكميات تلقائياً
+    const inputs = document.querySelectorAll('input[type="number"]');
+    inputs.forEach(input => {
+        input.addEventListener('input', function() {
+            if (this.value > 15) {
+                this.value = 15;
+            }
+            if (this.value < 0) {
+                this.value = 0;
+            }
         });
+    });
 });
