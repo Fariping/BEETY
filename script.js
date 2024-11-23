@@ -1,5 +1,5 @@
 // تهيئة EmailJS
-emailjs.init("YOUR_USER_ID");
+emailjs.init("service_t9ogwct");
 
 // عند الضغط على زر الإرسال
 document.getElementById("submit-order").addEventListener("click", function () {
