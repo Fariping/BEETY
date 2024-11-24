@@ -28,7 +28,6 @@
                         <input id="beef-meal" type="number" min="0" max="15" placeholder="0" onchange="updateTotal()">
                     </div>
                 </div>
-
                 <!-- وجبة دجاج -->
                 <div class="meal">
                     <div class="meal-info">
@@ -40,7 +39,6 @@
                         <input id="chicken-meal" type="number" min="0" max="15" placeholder="0" onchange="updateTotal()">
                     </div>
                 </div>
-
                 <!-- الأطباق الجانبية -->
                 <div class="side-dishes">
                     <h3>الأطباق الجانبية</h3>
@@ -53,29 +51,24 @@
                         <input id="side-dish-2" type="number" min="0" placeholder="0">
                     </div>
                 </div>
-
                 <!-- معلومات العميل -->
                 <div class="user-details">
                     <input id="customer-name" type="text" placeholder="الاسم" required>
-                    <input id="customer-phone" type="tel" placeholder="رقم الجوال" required pattern="[0-9]{10}">
+                    <input id="customer-phone" type="tel" placeholder="رقم الجوال (اختياري)" pattern="[0-9]{10}">
                 </div>
-
                 <!-- ملخص الطلب -->
                 <div class="order-summary">
                     <div class="total-price">
-                        الإجمالي: <span id="total-amount">0</span> يورو
+                        الإجمالي: <span id="total-amount">0</span> ريال
                     </div>
                 </div>
-
                 <!-- رسائل النجاح والخطأ -->
                 <div id="error-message" style="display: none;">حدث خطأ أثناء إرسال الطلب. يرجى المحاولة لاحقاً.</div>
                 <div id="success-message" style="display: none;">تم إرسال الطلب بنجاح! شكراً لطلبك.</div>
-
                 <!-- زر الإرسال -->
                 <button type="submit" id="submit-order">إرسال الطلب</button>
             </form>
         </div>
-
         <!-- معلومات التوصيل -->
         <div class="delivery-info">
             <p>الدفع كاش - استلام الطلب من الساعة 15-17</p>
