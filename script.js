@@ -28,12 +28,16 @@ async function handleSubmit(event) {
         // تحقق من إدخال الاسم
         if (!name) {
             alert("يا تيس اكتب اسمك");
-            throw new Error("اسم العميل مفقود");
+            // إعادة تفعيل الزر إذا توقف التنفيذ
+            submitButton.disabled = false;
+            return;
         }
 
         // تحقق من وجود طلب على الأقل
         if (beefQuantity === 0 && chickenQuantity === 0) {
-            throw new Error("يرجى اختيار وجبة واحدة على الأقل");
+            alert("يرجى اختيار وجبة واحدة على الأقل");
+            submitButton.disabled = false;
+            return;
         }
 
         const templateParams = {
