@@ -1,3 +1,6 @@
+document.addEventListener('DOMContentLoaded', function () {
+    emailjs.init("ghXddYA0ikWafyrWh");
+});
 // تحديث عدد الأطباق الجانبية المتاحة
 function updateSideDishes() {
     const beefQuantity = parseInt(document.getElementById("beef-meal").value) || 0;
