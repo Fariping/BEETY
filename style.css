@@ -1,141 +1,60 @@
-/* Reset القواعد */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* إضافة إلى الكود CSS السابق */
+
+/* تصميم قائمة وقت الاستلام */
+.pickup-time {
+    margin: 15px 0;
+    text-align: right;
 }
 
-/* خلفية الصفحة والخطوط */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    color: #333;
-    text-align: center;
+.pickup-time label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
 }
 
-/* الحاوية الرئيسية */
-.container {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
+.pickup-time select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
     background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-size: 1em;
 }
 
-/* العناوين */
-h1 {
-    font-size: 2em;
-    color: #d9534f;
-    margin-bottom: 20px;
-}
-
-h2 {
-    font-size: 1.5em;
-    margin-bottom: 15px;
-}
-
-h3 {
-    font-size: 1.2em;
-    margin-bottom: 10px;
-    color: #333;
-}
-
-/* أقسام الوجبات */
-.meal, .side-dishes {
-    background-color: #f8f9fa;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    text-align: left;
-}
-
-.meal-info {
-    display: flex;
-    justify-content: space-between;
+/* تصميم شاشة التحميل */
+.loading-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 1000;
+    justify-content: center;
     align-items: center;
 }
 
-.price {
-    color: #d9534f;
-    font-weight: bold;
+.loader {
+    border: 5px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 5px solid #d9534f;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
 }
 
-/* الحقول */
-input {
-    width: calc(100% - 20px);
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
-/* الأزرار */
-button {
-    background-color: #d9534f;
-    color: #fff;
-    border: none;
-    padding: 12px;
-    font-size: 1em;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #c9302c;
-}
-
-/* الرسائل */
-#error-message, #success-message {
-    font-weight: bold;
-    font-size: 1em;
-    margin-top: 10px;
-    padding: 10px;
-    border-radius: 5px;
-    text-align: center;
-}
-
-#error-message {
-    color: #dc3545;
-    background-color: #f8d7da;
-    border: 1px solid #f5c6cb;
-}
-
-#success-message {
-    color: #155724;
-    background-color: #d4edda;
-    border: 1px solid #c3e6cb;
-}
-
-/* ملخص الطلب */
-.total-price {
-    font-size: 1.2em;
-    font-weight: bold;
-    margin: 15px 0;
-}
-
-/* معلومات التوصيل */
-.delivery-info {
-    margin-top: 20px;
-    padding: 10px;
+/* تحسين تصميم الأطباق الجانبية */
+.side-dish-item input[type="number"] {
     background-color: #f8f9fa;
-    border-radius: 8px;
-    font-weight: bold;
 }
 
-/* تحسين التصميم للجوال */
-@media (max-width: 768px) {
-    .meal, .side-dishes {
-        text-align: center;
-    }
-
-    input, button {
-        width: 100%;
-    }
-
-    h1, h2 {
-        font-size: 1.5em;
-    }
+.side-dish-item input[type="number"]:disabled {
+    background-color: #e9ecef;
+    cursor: not-allowed;
 }
-
