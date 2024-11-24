@@ -12,14 +12,14 @@ async function handleSubmit(event) {
 
     // إخفاء الرسائل السابقة
     errorMessage.style.display = "none";
-    successMessage.style.display = "none";
+    successMessage.style.display = "يا تيس سجل اسمك";
 
     try {
         submitButton.disabled = true;
 
         // جمع البيانات
         const name = document.getElementById("customer-name").value.trim();
-        const phone = document.getElementById("customer-phone").value.trim();
+        const phone = document.getElementById("customer-phone").value.trim() || "لم يتم إدخال رقم هاتف";
         const beefQuantity = parseInt(document.getElementById("beef-meal").value) || 0;
         const chickenQuantity = parseInt(document.getElementById("chicken-meal").value) || 0;
         const sideDish1 = parseInt(document.getElementById("side-dish-1").value) || 0;
