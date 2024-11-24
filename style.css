@@ -1,55 +1,92 @@
-#error-message {
-    color: #dc3545;
+/* Reset القواعد */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* خلفية الصفحة والخطوط */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    text-align: center;
+}
+
+/* الحاوية الرئيسية */
+.container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* العناوين */
+h1 {
+    font-size: 2em;
+    color: #d9534f;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+}
+
+h3 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* أقسام الوجبات */
+.meal, .side-dishes {
+    background-color: #f8f9fa;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    text-align: left;
+}
+
+.meal-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price {
+    color: #d9534f;
     font-weight: bold;
-    margin-top: 10px;
-    display: none;
 }
 
-/* تحسين العرض للأجهزة الصغيرة */
-@media (max-width: 768px) {
-    .container {
-        padding: 15px;
-        margin: 10px;
-    }
-
-    .meal, .side-dishes, .user-details {
-        flex-direction: column;
-        align-items: flex-start;
-        text-align: center;
-    }
-
-    button, input {
-        width: 100%;
-        margin: 10px 0;
-    }
-
-    .meal h3, .side-dishes h3 {
-        font-size: 1.2em;
-        margin-bottom: 10px;
-    }
-
-    .total-price {
-        font-size: 1.2em;
-        margin-top: 10px;
-    }
+/* الحقول */
+input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
-/* تحسين الزر */
+/* الأزرار */
 button {
-    background-color: #28a745;
+    background-color: #d9534f;
     color: #fff;
-    font-size: 1.1em;
-    padding: 12px 20px;
     border: none;
+    padding: 12px;
+    font-size: 1em;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #218838;
+    background-color: #c9302c;
 }
 
+/* الرسائل */
 #error-message, #success-message {
     font-weight: bold;
     font-size: 1em;
@@ -71,6 +108,34 @@ button:hover {
     border: 1px solid #c3e6cb;
 }
 
+/* ملخص الطلب */
+.total-price {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+/* معلومات التوصيل */
+.delivery-info {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+/* تحسين التصميم للجوال */
+@media (max-width: 768px) {
+    .meal, .side-dishes {
+        text-align: center;
+    }
+
+    input, button {
+        width: 100%;
+    }
+
+    h1, h2 {
+        font-size: 1.5em;
     }
 }
 
