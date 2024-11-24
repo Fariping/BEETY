@@ -5,18 +5,72 @@
     display: none;
 }
 
+/* تحسين العرض للأجهزة الصغيرة */
 @media (max-width: 768px) {
     .container {
-        padding: 10px;
+        padding: 15px;
+        margin: 10px;
     }
 
-    .meal {
+    .meal, .side-dishes, .user-details {
         flex-direction: column;
         align-items: flex-start;
+        text-align: center;
     }
 
-    button {
+    button, input {
         width: 100%;
+        margin: 10px 0;
+    }
+
+    .meal h3, .side-dishes h3 {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+    }
+
+    .total-price {
+        font-size: 1.2em;
+        margin-top: 10px;
+    }
+}
+
+/* تحسين الزر */
+button {
+    background-color: #28a745;
+    color: #fff;
+    font-size: 1.1em;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+#error-message, #success-message {
+    font-weight: bold;
+    font-size: 1em;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+#error-message {
+    color: #dc3545;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+}
+
+#success-message {
+    color: #155724;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+}
+
     }
 }
 
