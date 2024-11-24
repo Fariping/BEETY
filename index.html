@@ -5,324 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BeetyFood - وجبات يوم السبت</title>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-
-        body {
-            background-color: #f9f9f9;
-            padding: 15px;
-        }
-
-        .container {
-            max-width: 100%;
-            margin: 0 auto;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            padding: 15px;
-        }
-
-        h1 {
-            color: #d9534f;
-            text-align: center;
-            font-size: 24px;
-            margin-bottom: 15px;
-        }
-
-        h2 {
-            text-align: center;
-            font-size: 20px;
-            margin-bottom: 20px;
-        }
-
-        .meal {
-            background-color: #f8f9fa;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-        }
-
-        .meal-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .price {
-            color: #d9534f;
-            font-weight: bold;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 16px;
-        }
-
-        .side-dishes {
-            background-color: #f8f9fa;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-        }
-
-        .pickup-time {
-            margin: 15px 0;
-        }
-
-        .pickup-time select {
-            background-color: white;
-        }
-
-        button {
-            width: 100%;
-            padding: 15px;
-            background-color: #d9534f;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: bold;
-            margin-top: 15px;
-        }
-
-        .delivery-info {
-            text-align: center;
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-        }
-
-        #error-message, #success-message {
-            display: none;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 6px;
-            text-align: center;
-        }
-
-        #error-message {
-            background-color: #f8d7da;
-            color: #dc3545;
-        }
-
-        #success-message {
-            background-color: #d4edda;
-            color: #155724;
-        }
-
-        .loading-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.8);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .loader {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #d9534f;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>BeetyFood</h1>
-        <h2>وجبات يوم السبت</h2>
-        
-        <div class="loading-overlay" id="loading-overlay">
-            <div class="loader"></div>
+        <div id="frame1">
+            <h1>BeetyFood</h1>
         </div>
 
-        <form id="orderForm" onsubmit="return handleSubmit(event)">
-            <div class="meal">
-                <div class="meal-info">
-                    <h3>وجبة لحم حنيد</h3>
-                    <span class="price">15 يورو</span>
+        <div id="frame2">
+            <h2>وجبات يوم السبت</h2>
+
+            <form id="orderForm" onsubmit="return handleSubmit(event)">
+                <!-- وجبة لحم -->
+                <div class="meal">
+                    <div class="meal-info">
+                        <h3>وجبة لحم حنيد</h3>
+                        <span class="price">15 يورو</span>
+                    </div>
+                    <div class="meal-quantity">
+                        <label for="beef-meal">الكمية:</label>
+                        <input id="beef-meal" type="number" min="0" max="15" placeholder="0" onchange="updateTotal()">
+                    </div>
                 </div>
-                <input id="beef-meal" type="number" min="0" max="15" placeholder="الكمية" onchange="updateTotal(); updateSideDishes()">
-            </div>
-
-            <div class="meal">
-                <div class="meal-info">
-                    <h3>وجبة دجاج مندي</h3>
-                    <span class="price">8 يورو</span>
+                <!-- وجبة دجاج -->
+                <div class="meal">
+                    <div class="meal-info">
+                        <h3>وجبة دجاج مندي</h3>
+                        <span class="price">8 يورو</span>
+                    </div>
+                    <div class="meal-quantity">
+                        <label for="chicken-meal">الكمية:</label>
+                        <input id="chicken-meal" type="number" min="0" max="15" placeholder="0" onchange="updateTotal()">
+                    </div>
                 </div>
-                <input id="chicken-meal" type="number" min="0" max="15" placeholder="الكمية" onchange="updateTotal(); updateSideDishes()">
-            </div>
-
-            <div class="side-dishes">
-                <h3>الأطباق الجانبية</h3>
-                <div>
-                    <input id="side-dish-1" type="number" min="0" placeholder="عدد سحاوق مع عشار">
+                <!-- الأطباق الجانبية -->
+                <div class="side-dishes">
+                    <h3>الأطباق الجانبية</h3>
+                    <div class="side-dish-item">
+                        <label for="side-dish-1">سحاوق مع عشار</label>
+                        <input id="side-dish-1" type="number" min="0" placeholder="0">
+                    </div>
+                    <div class="side-dish-item">
+                        <label for="side-dish-2">سلطة خيار مع زبادي</label>
+                        <input id="side-dish-2" type="number" min="0" placeholder="0">
+                    </div>
                 </div>
-                <div>
-                    <input id="side-dish-2" type="number" min="0" placeholder="عدد سلطة خيار مع زبادي">
+                <!-- معلومات العميل -->
+                <div class="user-details">
+                    <input id="customer-name" type="text" placeholder="الاسم" required>
+                    <input id="customer-phone" type="tel" placeholder="رقم الجوال" required pattern="[0-9]{10}">
                 </div>
-            </div>
-
-            <div class="pickup-time">
-                <select id="pickup-time" required>
-                    <option value="">اختر وقت الاستلام</option>
-                    <option value="15:00">15:00</option>
-                    <option value="15:30">15:30</option>
-                    <option value="16:00">16:00</option>
-                    <option value="16:30">16:30</option>
-                    <option value="17:00">17:00</option>
-                </select>
-            </div>
-
-            <input id="customer-name" type="text" placeholder="الاسم" required>
-        <input id="customer-phone" type="tel" placeholder="رقم الجوال (اختياري)" pattern="[0-9]{10}">
-
-            <div class="total-price">
-                الإجمالي: <span id="total-amount">0</span> يورو
-            </div>
-
-            <div id="error-message"></div>
-            <div id="success-message"></div>
-
-            <button type="submit" id="submit-order">إرسال الطلب</button>
-        </form>
-
+                <!-- ملخص الطلب -->
+                <div class="order-summary">
+                    <div class="total-price">
+                        الإجمالي: <span id="total-amount">0</span> ريال
+                    </div>
+                </div>
+                <!-- رسائل النجاح والخطأ -->
+                <div id="error-message" style="display: none;">حدث خطأ أثناء إرسال الطلب. يرجى المحاولة لاحقاً.</div>
+                <div id="success-message" style="display: none;">تم إرسال الطلب بنجاح! شكراً لطلبك.</div>
+                <!-- زر الإرسال -->
+                <button type="submit" id="submit-order">إرسال الطلب</button>
+            </form>
+        </div>
+        <!-- معلومات التوصيل -->
         <div class="delivery-info">
             <p>الدفع كاش - استلام الطلب من الساعة 15-17</p>
         </div>
     </div>
-
-    <script>
-        function updateSideDishes() {
-            const beefQuantity = parseInt(document.getElementById("beef-meal").value) || 0;
-            const chickenQuantity = parseInt(document.getElementById("chicken-meal").value) || 0;
-            const totalMeals = beefQuantity + chickenQuantity;
-            
-            const sideDish1 = document.getElementById("side-dish-1");
-            const sideDish2 = document.getElementById("side-dish-2");
-            
-            sideDish1.value = "0";
-            sideDish2.value = "0";
-            
-            if (totalMeals > 0) {
-                sideDish1.max = totalMeals;
-                sideDish2.max = totalMeals;
-                sideDish1.disabled = false;
-                sideDish2.disabled = false;
-            } else {
-                sideDish1.disabled = true;
-                sideDish2.disabled = true;
-            }
-        }
-
-        function updateTotal() {
-            const beefPrice = 15;
-            const chickenPrice = 8;
-            const beefQuantity = parseInt(document.getElementById("beef-meal").value) || 0;
-            const chickenQuantity = parseInt(document.getElementById("chicken-meal").value) || 0;
-            
-            const total = (beefQuantity * beefPrice) + (chickenQuantity * chickenPrice);
-            document.getElementById("total-amount").textContent = total;
-        }
-
-        async function handleSubmit(event) {
-            event.preventDefault();
-            const submitButton = document.getElementById("submit-order");
-            const errorMessage = document.getElementById("error-message");
-            const successMessage = document.getElementById("success-message");
-            const loadingOverlay = document.getElementById("loading-overlay");
-            
-            errorMessage.style.display = "none";
-            successMessage.style.display = "none";
-            loadingOverlay.style.display = "flex";
-            
-            try {
-                submitButton.disabled = true;
-                
-                const name = document.getElementById("customer-name").value.trim();
-                const phone = document.getElementById("customer-phone").value.trim();
-                const beefQuantity = parseInt(document.getElementById("beef-meal").value) || 0;
-                const chickenQuantity = parseInt(document.getElementById("chicken-meal").value) || 0;
-                const sideDish1 = parseInt(document.getElementById("side-dish-1").value) || 0;
-                const sideDish2 = parseInt(document.getElementById("side-dish-2").value) || 0;
-                const pickupTime = document.getElementById("pickup-time").value;
-                
-                if (!name) {
-                    alert("يرجى إدخال الاسم");
-                    return;
-                }
-                
-                if (!pickupTime) {
-                    alert("يرجى اختيار وقت الاستلام");
-                    return;
-                }
-                
-                if (beefQuantity === 0 && chickenQuantity === 0) {
-                    alert("يرجى اختيار وجبة واحدة على الأقل");
-                    return;
-                }
-                
-                const templateParams = {
-                    from_name: name,
-                    to_name: "BeetyFood Team",
-                    phone: phone || "لم يتم إدخال رقم هاتف",
-                    pickup_time: pickupTime,
-                    message: "طلب جديد من العميل",
-                    beefQuantity: beefQuantity,
-                    chickenQuantity: chickenQuantity,
-                    sideDish1: sideDish1,
-                    sideDish2: sideDish2
-                };
-                
-                const response = await emailjs.send(
-                    "service_t9ogwct", 
-                    "template_0hkm9zd", 
-                    templateParams
-                );
-                
-                if (response.status === 200) {
-                    successMessage.textContent = "تم إرسال الطلب بنجاح! شكراً لطلبك.";
-                    successMessage.style.display = "block";
-                    document.getElementById("orderForm").reset();
-                    updateTotal();
-                    updateSideDishes();
-                } else {
-                    throw new Error(`فشل الإرسال: ${response.text}`);
-                }
-            } catch (error) {
-                console.error("تفاصيل الخطأ:", error);
-                errorMessage.textContent = error.message || "حدث خطأ أثناء إرسال الطلب. يرجى التحقق من البيانات.";
-                errorMessage.style.display = "block";
-            } finally {
-                submitButton.disabled = false;
-                loadingOverlay.style.display = "none";
-            }
-        }
-
-        // تهيئة أولية
-        updateSideDishes();
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
