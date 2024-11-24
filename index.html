@@ -21,18 +21,11 @@
                 <div class="meal">
                     <div class="meal-info">
                         <h3>وجبة لحم حنيد</h3>
-                    </div>
-                    <div class="meal-price">
-                        <span class="price">15 ريال</span>
+                        <span class="price">15 يورو</span>
                     </div>
                     <div class="meal-quantity">
                         <label for="beef-meal">الكمية:</label>
-                        <input id="beef-meal" 
-                               type="number" 
-                               min="0" 
-                               max="15" 
-                               placeholder="0"
-                               onchange="updateTotal()">
+                        <input id="beef-meal" type="number" min="0" max="15" placeholder="0" onchange="updateTotal()">
                     </div>
                 </div>
 
@@ -40,18 +33,11 @@
                 <div class="meal">
                     <div class="meal-info">
                         <h3>وجبة دجاج مندي</h3>
-                    </div>
-                    <div class="meal-price">
-                        <span class="price">15 ريال</span>
+                        <span class="price">8 يورو</span>
                     </div>
                     <div class="meal-quantity">
                         <label for="chicken-meal">الكمية:</label>
-                        <input id="chicken-meal" 
-                               type="number" 
-                               min="0" 
-                               max="15" 
-                               placeholder="0"
-                               onchange="updateTotal()">
+                        <input id="chicken-meal" type="number" min="0" max="15" placeholder="0" onchange="updateTotal()">
                     </div>
                 </div>
 
@@ -60,37 +46,18 @@
                     <h3>الأطباق الجانبية</h3>
                     <div class="side-dish-item">
                         <label for="side-dish-1">سحاوق مع عشار</label>
-                        <input id="side-dish-1" 
-                               type="number" 
-                               min="0" 
-                               placeholder="0"
-                               onchange="validateSideDishes()">
+                        <input id="side-dish-1" type="number" min="0" placeholder="0">
                     </div>
                     <div class="side-dish-item">
                         <label for="side-dish-2">سلطة خيار مع زبادي</label>
-                        <input id="side-dish-2" 
-                               type="number" 
-                               min="0" 
-                               placeholder="0"
-                               onchange="validateSideDishes()">
+                        <input id="side-dish-2" type="number" min="0" placeholder="0">
                     </div>
                 </div>
 
                 <!-- معلومات العميل -->
                 <div class="user-details">
-                    <div class="input-group">
-                        <input id="customer-name" 
-                               type="text" 
-                               placeholder="الاسم" 
-                               required>
-                    </div>
-                    <div class="input-group">
-                        <input id="customer-phone" 
-                               type="tel" 
-                               placeholder="رقم الجوال" 
-                               required
-                               pattern="[0-9]{10}">
-                    </div>
+                    <input id="customer-name" type="text" placeholder="الاسم" required>
+                    <input id="customer-phone" type="tel" placeholder="رقم الجوال" required pattern="[0-9]{10}">
                 </div>
 
                 <!-- ملخص الطلب -->
@@ -100,10 +67,9 @@
                     </div>
                 </div>
 
-                <!-- رسالة الخطأ -->
-                <div id="error-message" style="color: red; display: none;">
-                    حدث خطأ أثناء إرسال الطلب. يرجى المحاولة لاحقاً.
-                </div>
+                <!-- رسائل النجاح والخطأ -->
+                <div id="error-message" style="display: none;">حدث خطأ أثناء إرسال الطلب. يرجى المحاولة لاحقاً.</div>
+                <div id="success-message" style="display: none;">تم إرسال الطلب بنجاح! شكراً لطلبك.</div>
 
                 <!-- زر الإرسال -->
                 <button type="submit" id="submit-order">إرسال الطلب</button>
@@ -115,7 +81,6 @@
             <p>الدفع كاش - استلام الطلب من الساعة 15-17</p>
         </div>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
