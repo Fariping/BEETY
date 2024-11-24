@@ -57,7 +57,7 @@ async function handleSubmit(event) {
     } catch (error) {
         console.error("تفاصيل الخطأ:", error);
         errorMessage.textContent = error.message || "حدث خطأ أثناء إرسال الطلب. يرجى التحقق من البيانات.";
-        errorMessage.style.display = "block";
+        errorMessage.style.display = "يا تيس سجل اسمك";
     } finally {
         submitButton.disabled = false;
     }
