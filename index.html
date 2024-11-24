@@ -11,6 +11,9 @@
     <div class="container">
         <div id="frame1">
             <h1>BeetyFood</h1>
+            <div class="loading-overlay" id="loading-overlay">
+                <div class="loader"></div>
+            </div>
         </div>
         
         <div id="frame2">
@@ -25,7 +28,7 @@
                     </div>
                     <div class="meal-quantity">
                         <label for="beef-meal">الكمية:</label>
-                        <input id="beef-meal" type="number" min="0" max="15" placeholder="0" onchange="updateTotal()">
+                        <input id="beef-meal" type="number" min="0" max="15" placeholder="0" onchange="updateTotal(); updateSideDishes()">
                     </div>
                 </div>
                 <!-- وجبة دجاج -->
@@ -36,7 +39,7 @@
                     </div>
                     <div class="meal-quantity">
                         <label for="chicken-meal">الكمية:</label>
-                        <input id="chicken-meal" type="number" min="0" max="15" placeholder="0" onchange="updateTotal()">
+                        <input id="chicken-meal" type="number" min="0" max="15" placeholder="0" onchange="updateTotal(); updateSideDishes()">
                     </div>
                 </div>
                 <!-- الأطباق الجانبية -->
@@ -50,6 +53,18 @@
                         <label for="side-dish-2">سلطة خيار مع زبادي</label>
                         <input id="side-dish-2" type="number" min="0" placeholder="0">
                     </div>
+                </div>
+                <!-- وقت الاستلام -->
+                <div class="pickup-time">
+                    <label for="pickup-time">إختر وقت استلام الطلب:</label>
+                    <select id="pickup-time" required>
+                        <option value="">اختر الوقت</option>
+                        <option value="15:00">15:00</option>
+                        <option value="15:30">15:30</option>
+                        <option value="16:00">16:00</option>
+                        <option value="16:30">16:30</option>
+                        <option value="17:00">17:00</option>
+                    </select>
                 </div>
                 <!-- معلومات العميل -->
                 <div class="user-details">
