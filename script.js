@@ -19,16 +19,15 @@ async function handleSubmit(event) {
 
         // جمع البيانات
         const name = document.getElementById("customer-name").value.trim();
-        const phone = document.getElementById("customer-phone").value.trim() || "لم يتم إدخال رقم هاتف";
+        const phone = document.getElementById("customer-phone").value.trim(); // الهاتف اختياري
         const beefQuantity = parseInt(document.getElementById("beef-meal").value) || 0;
         const chickenQuantity = parseInt(document.getElementById("chicken-meal").value) || 0;
         const sideDish1 = parseInt(document.getElementById("side-dish-1").value) || 0;
         const sideDish2 = parseInt(document.getElementById("side-dish-2").value) || 0;
 
-        // تحقق من إدخال الاسم
+        // تحقق من إدخال الاسم فقط
         if (!name) {
             alert("يا تيس اكتب اسمك");
-            // إعادة تفعيل الزر إذا توقف التنفيذ
             submitButton.disabled = false;
             return;
         }
@@ -43,7 +42,7 @@ async function handleSubmit(event) {
         const templateParams = {
             from_name: name,
             to_name: "BeetyFood Team",
-            phone: phone,
+            phone: phone || "لم يتم إدخال رقم هاتف", // إذا لم يتم إدخال الهاتف، يُرسل نص افتراضي
             message: "طلب جديد من العميل",
             beefQuantity: beefQuantity,
             chickenQuantity: chickenQuantity,
