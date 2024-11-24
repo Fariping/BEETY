@@ -12,7 +12,7 @@ async function handleSubmit(event) {
 
     // إخفاء الرسائل السابقة
     errorMessage.style.display = "none";
-    successMessage.style.display = "يا تيس سجل اسمك";
+    successMessage.style.display = "none";
 
     try {
         submitButton.disabled = true;
@@ -25,6 +25,13 @@ async function handleSubmit(event) {
         const sideDish1 = parseInt(document.getElementById("side-dish-1").value) || 0;
         const sideDish2 = parseInt(document.getElementById("side-dish-2").value) || 0;
 
+        // تحقق من إدخال الاسم
+        if (!name) {
+            alert("يا تيس اكتب اسمك");
+            throw new Error("اسم العميل مفقود");
+        }
+
+        // تحقق من وجود طلب على الأقل
         if (beefQuantity === 0 && chickenQuantity === 0) {
             throw new Error("يرجى اختيار وجبة واحدة على الأقل");
         }
@@ -57,7 +64,7 @@ async function handleSubmit(event) {
     } catch (error) {
         console.error("تفاصيل الخطأ:", error);
         errorMessage.textContent = error.message || "حدث خطأ أثناء إرسال الطلب. يرجى التحقق من البيانات.";
-        errorMessage.style.display = "يا تيس سجل اسمك";
+        errorMessage.style.display = "block";
     } finally {
         submitButton.disabled = false;
     }
