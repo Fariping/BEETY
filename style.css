@@ -62,10 +62,29 @@ h3 {
 }
 
 /* الحقول */
-input {
+input, select {
     width: calc(100% - 20px);
     padding: 10px;
     margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* القائمة المنسدلة لوقت الاستلام */
+.pickup-time {
+    margin-top: 15px;
+    text-align: left;
+}
+
+.pickup-time label {
+    font-size: 1em;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.pickup-time select {
+    width: 100%;
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
@@ -93,48 +112,3 @@ button:hover {
     margin-top: 10px;
     padding: 10px;
     border-radius: 5px;
-    text-align: center;
-}
-
-#error-message {
-    color: #dc3545;
-    background-color: #f8d7da;
-    border: 1px solid #f5c6cb;
-}
-
-#success-message {
-    color: #155724;
-    background-color: #d4edda;
-    border: 1px solid #c3e6cb;
-}
-
-/* ملخص الطلب */
-.total-price {
-    font-size: 1.2em;
-    font-weight: bold;
-    margin: 15px 0;
-}
-
-/* معلومات التوصيل */
-.delivery-info {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    font-weight: bold;
-}
-
-/* تحسين التصميم للجوال */
-@media (max-width: 768px) {
-    .meal, .side-dishes {
-        text-align: center;
-    }
-
-    input, button {
-        width: 100%;
-    }
-
-    h1, h2 {
-        font-size: 1.5em;
-    }
-}
