@@ -34,8 +34,9 @@ async function handleSubmit(event) {
 
         
       // جمع البيانات
+// جمع البيانات
 const name = document.getElementById("customer-name").value.trim();
-const phone = document.getElementById("customer-phone").value.trim();
+const phone = document.getElementById("customer-phone").value.trim() || "لم يتم إدخال رقم هاتف";
 const beefQuantity = parseInt(document.getElementById("beef-meal").value) || 0;
 const chickenQuantity = parseInt(document.getElementById("chicken-meal").value) || 0;
 const sideDish1 = parseInt(document.getElementById("side-dish-1").value) || 0;
@@ -45,13 +46,6 @@ const pickupTime = document.getElementById("pickup-time").value;
 // تحقق من إدخال الاسم
 if (!name) {
     alert("يرجى إدخال الاسم");
-    submitButton.disabled = false;
-    return;
-}
-
-// تحقق من إدخال رقم الهاتف
-if (!phone) {
-    alert("يرجى إدخال رقم الهاتف");
     submitButton.disabled = false;
     return;
 }
