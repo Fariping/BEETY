@@ -57,7 +57,7 @@ if (beefQuantity === 0 && chickenQuantity === 0) {
     return;
 }
 
-// التحقق من اختيار وقت الاستلام
+// تحقق من اختيار وقت الاستلام
 if (!pickupTime) {
     alert("يرجى اختيار وقت استلام الطلب");
     submitButton.disabled = false;
@@ -72,17 +72,17 @@ if (sideDish1 + sideDish2 > totalMeals) {
     return;
 }
 
+// متابعة العملية إذا كانت البيانات صحيحة
+const templateParams = {
+    from_name: name,
+    phone: phone,
+    pickup_time: pickupTime,
+    beefQuantity: beefQuantity,
+    chickenQuantity: chickenQuantity,
+    sideDish1: sideDish1,
+    sideDish2: sideDish2
+};
 
-        const templateParams = {
-            from_name: name,
-            to_name: "BeetyFood Team",
-            phone: phone,
-            pickup_time: pickupTime,
-            beefQuantity: beefQuantity,
-            chickenQuantity: chickenQuantity,
-            sideDish1: sideDish1,
-            sideDish2: sideDish2
-        };
 
         // إرسال الطلب عبر EmailJS
         const response = await emailjs.send(
