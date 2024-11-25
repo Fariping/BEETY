@@ -3,6 +3,21 @@ document.addEventListener('DOMContentLoaded', function () {
     emailjs.init("ghXddYA0ikWafyrWh");
 });
 
+// تحديث إجمالي الأطباق الجانبية المسموح بها
+function updateTotal() {
+    const beefQuantity = parseInt(document.getElementById("beef-meal").value) || 0;
+    const chickenQuantity = parseInt(document.getElementById("chicken-meal").value) || 0;
+    const totalMeals = beefQuantity + chickenQuantity;
+
+    // تحديث الحد الأقصى للأطباق الجانبية
+    document.getElementById("side-dish-1").max = totalMeals;
+    document.getElementById("side-dish-2").max = totalMeals;
+
+    // تحديث الإجمالي
+    const totalAmount = (beefQuantity * 15) + (chickenQuantity * 8); // مثال لحساب السعر
+    document.getElementById("total-amount").textContent = totalAmount;
+}
+
 async function handleSubmit(event) {
     event.preventDefault();
 
@@ -24,11 +39,11 @@ async function handleSubmit(event) {
         const chickenQuantity = parseInt(document.getElementById("chicken-meal").value) || 0;
         const sideDish1 = parseInt(document.getElementById("side-dish-1").value) || 0;
         const sideDish2 = parseInt(document.getElementById("side-dish-2").value) || 0;
+        const pickupTime = document.getElementById("pickup-time").value;
 
         // تحقق من إدخال الاسم
         if (!name) {
-            alert("يا تيس اكتب اسمك");
-            // إعادة تفعيل الزر إذا توقف التنفيذ
+            alert("يرجى إدخال الاسم");
             submitButton.disabled = false;
             return;
         }
@@ -40,11 +55,26 @@ async function handleSubmit(event) {
             return;
         }
 
+        // التحقق من اختيار وقت الاستلام
+        if (!pickupTime) {
+            alert("يرجى اختيار وقت استلام الطلب");
+            submitButton.disabled = false;
+            return;
+        }
+
+        // التحقق من أن الأطباق الجانبية لا تتجاوز الحد المسموح به
+        const totalMeals = beefQuantity + chickenQuantity;
+        if (sideDish1 + sideDish2 > totalMeals) {
+            alert(`لا يمكن اختيار أكثر من ${totalMeals} أطباق جانبية`);
+            submitButton.disabled = false;
+            return;
+        }
+
         const templateParams = {
             from_name: name,
             to_name: "BeetyFood Team",
             phone: phone,
-            message: "طلب جديد من العميل",
+            pickup_time: pickupTime,
             beefQuantity: beefQuantity,
             chickenQuantity: chickenQuantity,
             sideDish1: sideDish1,
@@ -53,8 +83,8 @@ async function handleSubmit(event) {
 
         // إرسال الطلب عبر EmailJS
         const response = await emailjs.send(
-            "service_t9ogwct", 
-            "template_0hkm9zd", 
+            "service_t9ogwct",
+            "template_0hkm9zd",
             templateParams
         );
 
@@ -62,6 +92,7 @@ async function handleSubmit(event) {
             successMessage.textContent = "تم إرسال الطلب بنجاح! شكراً لطلبك.";
             successMessage.style.display = "block";
             document.getElementById("orderForm").reset();
+            updateTotal(); // إعادة ضبط الإجمالي بعد الإرسال
         } else {
             throw new Error(`فشل الإرسال: ${response.text}`);
         }
