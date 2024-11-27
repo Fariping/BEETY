@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     // استبدل YOUR_PUBLIC_KEY بالمفتاح الخاص بك من EmailJS
-    emailjs.init("ghXddYA0ikWafyrW");
+    emailjs.init("ghXddYA0ikWafyrWh");
 });
 
 // تحديث إجمالي الأطباق الجانبية المسموح بها
@@ -87,7 +87,7 @@ const templateParams = {
         // إرسال الطلب عبر EmailJS
         const response = await emailjs.send(
             "service_t9ogwct",
-            "template_0hkm9zd",
+            "template_0hkm9z",
             templateParams
         );
 
