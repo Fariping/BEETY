@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     // استبدل YOUR_PUBLIC_KEY بالمفتاح الخاص بك من EmailJS
-    emailjs.init("ghXddYA0ikWafyrWh");
+    emailjs.init("ghXddYA0ikWafyrW");
 });
 
 // تحديث إجمالي الأطباق الجانبية المسموح بها
@@ -101,7 +101,7 @@ const templateParams = {
         }
     } catch (error) {
         console.error("تفاصيل الخطأ:", error);
-        errorMessage.textContent = error.message || "حدث خطأ أثناء إرسال الطلب. يرجى التحقق من البيانات.";
+        errorMessage.textContent = error.message || "نعتذر منك نفذت الكميه";
         errorMessage.style.display = "block";
     } finally {
         submitButton.disabled = false;
