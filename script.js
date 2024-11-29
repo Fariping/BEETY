@@ -87,7 +87,7 @@ const templateParams = {
         // إرسال الطلب عبر EmailJS
         const response = await emailjs.send(
             "service_t9ogwct",
-            "template_0hkm9zd",
+            "template_0hkm9z",
             templateParams
         );
 
@@ -101,7 +101,7 @@ const templateParams = {
         }
     } catch (error) {
         console.error("تفاصيل الخطأ:", error);
-        errorMessage.textContent = error.message || "نعتذر منكم نفذت الكميه";
+        errorMessage.textContent = error.message || "نعتذر منكم نفذت الكميه ، ناخذ طلبكم السبت القادم";
         errorMessage.style.display = "block";
     } finally {
         submitButton.disabled = false;
