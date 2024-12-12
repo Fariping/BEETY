@@ -87,7 +87,7 @@ const templateParams = {
         // إرسال الطلب عبر EmailJS
         const response = await emailjs.send(
             "service_t9ogwct",
-            "template_0hkm9z",
+            "template_0hkm9zd",
             templateParams
         );
 
