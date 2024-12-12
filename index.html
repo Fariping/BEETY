@@ -30,6 +30,38 @@
                 </div>
 
                 <!-- وجبة دجاج -->
+              <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeetyFood - وجبات يوم السبت</title>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div id="frame1">
+            <h1>BeetyFood</h1>
+        </div>
+        
+        <div id="frame2">
+            <h2>وجبات يوم السبت</h2>
+            
+            <form id="orderForm" onsubmit="return handleSubmit(event)">
+                <!-- وجبة لحم -->
+                <div class="meal">
+                    <div class="meal-info">
+                        <h3>وجبة لحم حنيد</h3>
+                        <span class="price">15 يورو</span>
+                    </div>
+                    <div class="meal-quantity">
+                        <label for="beef-meal">الكمية:</label>
+                        <input id="beef-meal" type="number" min="0" max="15" placeholder="0" onchange="updateTotal()">
+                    </div>
+                </div>
+
+                <!-- وجبة دجاج -->
                 <div class="meal">
                     <div class="meal-info">
                         <h3>  وجبة كبسه دجاج</h3>
@@ -40,6 +72,67 @@
                         <input id="chicken-meal" type="number" min="0" max="15" placeholder="0" onchange="updateTotal()">
                     </div>
                 </div>
+
+                <!-- الأطباق الجانبية -->
+                <div class="side-dishes">
+                    <h3>الأطباق الجانبية</h3>
+                    <div class="side-dish-item">
+                        <label for="side-dish-1">سحاوق مع عشار</label>
+                        <input id="side-dish-1" type="number" min="0" placeholder="0">
+                    </div>
+                    <div class="side-dish-item">
+                        <label for="side-dish-2">سلطة  مع سحاوق حار</label>
+                        <input id="side-dish-2" type="number" min="0" placeholder="0">
+                    </div>
+                </div>
+
+                <!-- قائمة اختيار وقت الاستلام -->
+<div class="pickup-time">
+    <label for="pickup-time">اختر وقت استلام الطلب:</label>
+    <select id="pickup-time" required>
+        <option value="" disabled selected>اختر وقت استلام الطلب</option>
+        <option value="15:00">15:00</option>
+         <option value="15:00">15:30</option>
+        <option value="16:00">16:00</option>
+         <option value="16:00">16:30</option>
+        <option value="17:00">17:00</option>
+    </select>
+</div>
+
+             
+               
+                <!-- معلومات العميل -->
+<div class="user-details">
+    <input id="customer-name" type="text" placeholder="الاسم" required>
+<input id="customer-phone" type="tel" placeholder="رقم الجوال">
+</div>
+
+
+                <!-- ملخص الطلب -->
+                <div class="order-summary">
+                    <div class="total-price">
+                        الإجمالي: <span id="total-amount">0</span> يورو
+                    </div>
+                </div>
+
+                <!-- رسائل النجاح والخطأ -->
+                <div id="error-message" style="display: none;">حدث خطأ أثناء إرسال الطلب. يرجى المحاولة لاحقاً.</div>
+                <div id="success-message" style="display: none;">تم إرسال الطلب بنجاح! شكراً لطلبك.</div>
+
+                <!-- زر الإرسال -->
+                <button type="submit" id="submit-order">إرسال الطلب</button>
+            </form>
+        </div>
+
+        <!-- معلومات التوصيل -->
+        <div class="delivery-info">
+            <p>الدفع كاش - استلام الطلب من الساعة 15-17</p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
 
                 <!-- الأطباق الجانبية -->
                 <div class="side-dishes">
