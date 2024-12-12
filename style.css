@@ -1,3 +1,22 @@
+body {
+    background-image: url('/Back.JPG');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: Arial, sans-serif;
+    color: #333;
+    text-align: center;
+}
+
+/* تعديل الحاوية لتناسب الخلفية */
+.container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.95); /* إضافة شفافية خفيفة */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
 /* Reset القواعد */
 * {
     margin: 0;
