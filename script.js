@@ -105,7 +105,8 @@ const templateParams = {
     } finally {
         submitButton.disabled = false;
     }
-    function closeModal(){
+   
+}
+ function closeModal(){
         document.getElementById("successModal").style.display ="none";
     }
-}
