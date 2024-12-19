@@ -173,7 +173,7 @@ input, select {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('/Image.jpeg'); /* ضع مسار صورتك هنا */
+    background-image: url('Image.jpeg'); /* ضع مسار صورتك هنا */
     background-size: contain; /* أو cover حسب احتياجك */
     background-repeat: no-repeat;
     background-position: center;
