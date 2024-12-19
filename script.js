@@ -87,15 +87,14 @@ const templateParams = {
         // إرسال الطلب عبر EmailJS
         const response = await emailjs.send(
             "service_t9ogwct",
-            "template_0hkm9z",
+            "template_0hkm9zd",
             templateParams
         );
 
         if (response.status === 200) {
-            successMessage.textContent = "تم إرسال الطلب بنجاح! شكراً لطلبك.";
-            successMessage.style.display = "block";
+            document.getElementById("successModal").style.display="flex";
             document.getElementById("orderForm").reset();
-            updateTotal(); // إعادة ضبط الإجمالي بعد الإرسال
+             updateTotal(); // إعادة ضبط الإجمالي بعد الإرسال
         } else {
             throw new Error(`فشل الإرسال: ${response.text}`);
         }
@@ -105,5 +104,8 @@ const templateParams = {
         errorMessage.style.display = "block";
     } finally {
         submitButton.disabled = false;
+    }
+    function closeModal(){
+        document.getElementById("successModal").style.display ="none";
     }
 }
