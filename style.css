@@ -155,6 +155,38 @@ input, select {
     border-radius: 5px;
 }
 
+.meal {
+    background-color: #f8f9fa;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    text-align: left;
+    position: relative; /* مهم لوضع الصورة خلف المحتوى */
+    overflow: hidden;   /* لإخفاء أي جزء من الصورة يتجاوز الحدود */
+}
+
+/* إضافة الصورة الشفافة */
+.meal.beef-meal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('Image.jpeg'); /* ضع مسار صورتك هنا */
+    background-size: contain; /* أو cover حسب احتياجك */
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.1; /* تحكم في درجة الشفافية من 0 إلى 1 */
+    z-index: 0;
+}
+
+/* تأكد أن المحتوى يظهر فوق الصورة */
+.meal-info, .meal-quantity {
+    position: relative;
+    z-index: 1;
+}
+
 /* القائمة المنسدلة لوقت الاستلام */
 .pickup-time {
     margin-top: 15px;
