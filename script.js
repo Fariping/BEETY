@@ -92,7 +92,7 @@ const templateParams = {
         );
 
         if (response.status === 200) {
-            document.getElementById("successModal").style.display="flex";
+            document.getElementById("successModal").classList.add('show');
             document.getElementById("orderForm").reset();
              updateTotal(); // إعادة ضبط الإجمالي بعد الإرسال
         } else {
@@ -108,5 +108,5 @@ const templateParams = {
    
 }
  function closeModal(){
-        document.getElementById("successModal").style.display ="none";
+        document.getElementById("successModal").classList.remove('show');
     }
