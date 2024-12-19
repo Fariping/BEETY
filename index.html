@@ -79,6 +79,17 @@
                         الإجمالي: <span id="total-amount">0</span> يورو
                     </div>
                 </div>
+                
+                <!-- إضافة Modal للتأكيد -->
+<div id="successModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="success-icon">✓</div>
+        <h3>تم إرسال طلبك بنجاح!</h3>
+        <p>شكراً لطلبك من BeetyFood</p>
+        <p>سنقوم بتحضير طلبك في الوقت المحدد</p>
+        <button onclick="closeModal()">حسناً</button>
+    </div>
+</div>
 
                 <!-- رسائل النجاح والخطأ -->
                 <div id="error-message" style="display: none;">حدث خطأ أثناء إرسال الطلب. يرجى المحاولة لاحقاً.</div>
